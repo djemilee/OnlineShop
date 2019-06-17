@@ -1,8 +1,3 @@
-package shop;
-
-import shop.Profile;
-import shop.Stock;
-
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -225,14 +220,14 @@ public class User {
     private void changePassword() {
         System.out.println("Old password: ");
         String oldPassword = sc.next();
-        while (oldPassword.equals(this.password)) {
-            System.out.println("It's not your old password!");
-            System.out.println("Try again: ");
-            oldPassword = sc.next();
-        }
-        System.out.println("Successful!");
-        String newPass = sc.next();
-        this.setPassword(newPass);
+            while (oldPassword.equals(this.password)) {
+                System.out.println("It's not your old password!");
+                System.out.println("Try again: ");
+                oldPassword = sc.next();
+            }
+            System.out.println("Successful!");
+            String newPass = sc.next();
+            this.setPassword(newPass);
     }
 
 

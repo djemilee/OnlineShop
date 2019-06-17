@@ -1,5 +1,3 @@
-package shop;
-
 import java.util.*;
 
 public class Stock implements Comparable<Stock> {
