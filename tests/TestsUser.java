@@ -18,6 +18,5 @@ public class TestsUser {
     @Test
     public void testCreateNewUser(){
 
-
     }
 }
