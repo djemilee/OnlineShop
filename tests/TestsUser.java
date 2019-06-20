@@ -2,21 +2,22 @@ package tests;
 
 import org.junit.Before;
 import org.junit.Test;
+import shop.User;
 import shop.Vmzona;
 
 import static junit.framework.TestCase.*;
 
 public class TestsUser {
 
-    Vmzona shop;
+    User user;
 
     @Before
     public void setUp(){
-        shop = new Vmzona("Djemi N1");
+        user = new User();
     }
 
     @Test
-    public void testCreateNewUser(){
+    public void testIsValidPasswordUser(){
 
     }
 }
