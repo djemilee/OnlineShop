@@ -17,10 +17,7 @@ public class TestsStocks {
         stock2 = new Stock("roklq", 40, "nike", "red");
     }
 
-    @Test
-    public void testGiveStock(){
 
-    }
 
 
 }
