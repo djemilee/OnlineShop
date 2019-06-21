@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class User {
+public class User{
 
     private static final int MIN_LENGTH_OF_PASSWORD = 6;
     private static final Scanner sc = new Scanner(System.in);
@@ -71,11 +71,12 @@ public class User {
         if (regexMt.matches()) {
             return true;
         }
-        System.out.println("Not correct email adress!");
+        System.out.println("Not correct email address!");
         return false;
     }
 
-    public static void actions(Vmzona shop) {
+
+    public static void shopping(Vmzona shop) {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("1 New User");
@@ -97,7 +98,6 @@ public class User {
     private static void actionsWhenYouLogged(User user) {
         shop.showAllExistStocks();
         while (true) {
-
             System.out.println();
             System.out.println("Exit from site with 3 or continue with some other number.");
             String comand = sc.next();
@@ -105,7 +105,6 @@ public class User {
                 System.out.println("Bye!");
                 return;
             }
-
             System.out.println("Enter a number of stock, which you want to order: ");
             String idStock = sc.next();
             if (shop.checkForStock(idStock)) {
@@ -127,11 +126,11 @@ public class User {
                     } else {
                         continue;
                     }
-
-                } catch (Exception e) {
+                }catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else {
+            }
+            else {
                 System.out.println("This stock not exist!");
                 continue;
             }

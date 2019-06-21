@@ -24,8 +24,8 @@ public class Demo{
         Scanner sc = new Scanner(System.in);
         try {
 
-            Vmzona shop = new Vmzona("Vmzona");
-            shop.addStock(Categories.AUTOPARTS, new Stock("komplekt(2 gumi)", 25, "iron", "black"));
+            Vmzona shop = new Vmzona("VmZona");
+            shop.addStock(Categories.AUTOPARTS, new Stock("set of two tires", 25, "iron", "black"));
 
 
             for (Categories k : Categories.values()) {
@@ -39,7 +39,8 @@ public class Demo{
             }
 
 
-            System.out.println("MENU VmZona");
+            System.out.println("Welcome to shop *Djemi N1* :)");
+            System.out.println("MENU:");
             System.out.println("--------");
             System.out.println("1 - Guest");
             System.out.println("2 - User");
@@ -64,7 +65,7 @@ public class Demo{
                         Guest guest = new Guest();
                         shop.showAllExistStocks();
 
-                        guest.action(shop);
+                        guest.shopping(shop);
 
                         System.out.println("Enter \"Finished\" for Finished");
                         System.out.println("Enter \"Continue\" for Continue");
@@ -78,9 +79,8 @@ public class Demo{
                         }
                     }
                     if (choose.equalsIgnoreCase("2")) {
-                        System.out.println("Other!!");
                         try {
-                            User.actions(shop);
+                            User.shopping(shop);
 
                             System.out.println("Enter 0 for exit or number from MENU(1- Guest,2- User,3- Administrator) for continue ");
                             choose = sc.next();

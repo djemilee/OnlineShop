@@ -7,20 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-
-/*
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
-*/
-
-
 public class Vmzona {
 
     public static final int MIN_VOTE = 1;
@@ -35,6 +21,7 @@ public class Vmzona {
             new Provider("Lacho"),
             new Provider("Kaloqn")));
 
+    private List<String> addresses = new ArrayList<String>();
     private List<Stock> orderedStocks = new ArrayList<Stock>();
 
     public Vmzona(String name) {
@@ -42,10 +29,18 @@ public class Vmzona {
         this.turnover = 0;
     }
 
-
+    Scanner sc = new Scanner(System.in);
     public void provide() {
+        System.out.println("Add address for provide: ");
+        String address = sc.next();
+        addAddress(address);
+
         Provider randomDostavchik = (Provider) getRandom(this.providers);
         System.out.println("The provider " + randomDostavchik.getName() + " will receive your order within two days!");
+    }
+
+    public void addAddress(String address){
+        addresses.add(address);
     }
 
     private static Object getRandom(List list) {
@@ -71,8 +66,6 @@ public class Vmzona {
         throw new Exception("The stock not exist");
     }
 
-
-    Scanner sc = new Scanner(System.in);
     public void showAllExistStocks() {
         System.out.println("Choose criterion for sorting: ");
         System.out.println("1 - price");
@@ -90,7 +83,7 @@ public class Vmzona {
                             return stock1.getPrice() - stock2.getPrice();
                         }
                         return stock1.getName().compareTo(stock2.getName());
-                    }).forEach(stoka -> System.out.println(stoka));
+                    }).forEach(stock -> System.out.println(stock));
                     System.out.println();
                     continue;
                 case "2":
@@ -113,65 +106,6 @@ public class Vmzona {
             System.out.println();
         }
     }
- 
-    /* 
-    
-    public void toJson() throws InvalidDataException {
-
-		Gson gson = new GsonBuilder()
-				.excludeFieldsWithoutExposeAnnotation()
-				.setPrettyPrinting()
-				.create();
-		
-		File jsonShop = new File("src\\vmzona\\jsonShop.json");
-		if (!jsonShop.exists()) {
-			try {
-				jsonShop.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		String jsonShopUser = gson.toJson(new HashMap(this.users));
-		
-		try (PrintWriter pw = new PrintWriter(jsonShop)) {
-		pw.println(jsonShopUser);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}	
-    }
-    
-    
-    public void loadJson(String fileName) throws IOException {
-		String jsonString = readWithBufferedReader(fileName);
-		Gson gson = new GsonBuilder()
-				.excludeFieldsWithoutExposeAnnotation()
-				.setPrettyPrinting()
-				.create();
-		
-		Type type = new TypeToken<Map<String, User>>(){}.getType();
-		Map<String, User> myMap = gson.fromJson(jsonString, type);
-		this.users.putAll(myMap); 
-    }
-    
-    private String readWithBufferedReader(String fileName) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(fileName));
-		StringBuilder stringBuilder = new StringBuilder();
-		String line = null;
-		String ls = System.getProperty("line.separator");
-		while ((line = reader.readLine()) != null) {
-			stringBuilder.append(line);
-			stringBuilder.append(ls);
-		}
-		stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-		reader.close();
-
-		String content = stringBuilder.toString();
-		
-		return content;
-	}
-    
-   */
 
 
     public void printAllProviders() {
@@ -382,5 +316,9 @@ public class Vmzona {
 
     public int getSizeOfUsers(){
         return users.size();
+    }
+
+    public List<String> getAddresses(){
+        return Collections.unmodifiableList(addresses);
     }
 }

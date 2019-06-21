@@ -2,18 +2,21 @@ package tests;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import shop.Categories;
 import shop.Stock;
 import shop.User;
 import shop.Vmzona;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.TreeMap;
-
 import static junit.framework.TestCase.*;
 
 public class TestsShoping {
 
+    public static final String TEST_EMAIL = "dj@abv.bg";
     User user;
     Stock stock, stock1, stock2;
     Vmzona shop;
@@ -23,9 +26,9 @@ public class TestsShoping {
         shop = new Vmzona("Djemi N1");
         user = new User();
 
-        stock = new Stock("silikonov chasovnik", 35, "adidas", "black");
-        stock1 = new Stock("grivna", 28, "zara", "silver");
-        stock2 = new Stock("roklq", 40, "nike", "red");
+        stock = new Stock("silicon watch", 35, "adidas", "black");
+        stock1 = new Stock("bracelet", 28, "pandora", "silver");
+        stock2 = new Stock("dress", 40, "nike", "red");
     }
 
     @Test
@@ -51,25 +54,31 @@ public class TestsShoping {
         assertEquals(true, isFind);
     }
 
-
-    @Test ///?
-    public void testRemoveStock() throws Exception {
-        shop.addStock(Categories.WATCHES, stock);
-        shop.addStock(Categories.JEWELRY, stock1);
-        shop.addStock(Categories.CLOTHES, stock2);
-
-        shop.removeStock(1);
-        int newSize = shop.getSizeValueOfStocks();
-
-        assertEquals(2, newSize);
+    @Test
+    public void testNoHaveAdresses(){
+        int size = shop.getAddresses().size();
+        assertEquals(0, size);
     }
-
 
     @Test
-    public void testCheckForExistStock() {
-        shop.addStock(Categories.WATCHES, stock);
-        assertEquals(true, shop.checkForStock("1"));
+    public void testAddAddress(){
+        shop.addAddress("ul.MilePopyordanov 39A");
+
+        int size = shop.getAddresses().size();
+        assertNotSame(0, size);
     }
+
+//    @Test ///?
+//    public void testRemoveStock() throws Exception {
+//        shop.addStock(Categories.WATCHES, stock);
+//        shop.addStock(Categories.JEWELRY, stock1);
+//        shop.addStock(Categories.CLOTHES, stock2);
+//
+//        shop.removeStock(1);
+//        int newSize = shop.getSizeValueOfStocks();
+//
+//        assertEquals(2, newSize);
+//    }
 
     @Test
     public void testCheckForNotExistStock() {
@@ -99,7 +108,7 @@ public class TestsShoping {
         shop.addUser(user);
         int size = shop.getSizeOfUsers();
 
-        shop.removeUser("dj@abv.bg");
+        shop.removeUser(TEST_EMAIL);
         int newSize = shop.getSizeOfUsers();
 
         assertNotSame(size, newSize);
@@ -108,7 +117,7 @@ public class TestsShoping {
     @Test
     public void testRemoveUserAgain() {
         shop.addUser(user);
-        shop.removeUser("dj@abv.bg");
+        shop.removeUser(TEST_EMAIL);
         int size = shop.getSizeOfUsers();
 
         assertEquals(0, size);

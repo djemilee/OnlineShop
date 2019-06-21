@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Guest {
+public class Guest{
 
     Scanner sc = new Scanner(System.in);
 
@@ -41,8 +41,8 @@ public class Guest {
         System.out.println();
     }
 
-    public void action(Vmzona shop) {
 
+    public void shopping(Vmzona shop) {
         while (true) {
             System.out.println("Enter a number of stock, which you want to order: ");
             String idStock = sc.next();
