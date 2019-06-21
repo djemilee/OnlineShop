@@ -1,7 +1,4 @@
 # OnlineShop
 
 Тhe project represents simple program for managing Online shop:
-
--using a Design Patterns
--added a Unit Tests
--refactoring the source, using the clean code principles.
+-Using a Design Patterns, Added a Unit Tests, Refactoring the source, using the clean code principles.
