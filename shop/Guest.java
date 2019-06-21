@@ -1,3 +1,4 @@
+package shop;
 
 import java.util.Scanner;
 import java.util.Set;
@@ -9,8 +10,8 @@ public class Guest {
 
     private Set<Stock> stocksInCart = new TreeSet<>();
     private int sumOrder;
-   
-    Guest() {
+
+    public Guest() {
         this.sumOrder = 0;
     }
 
@@ -19,6 +20,15 @@ public class Guest {
             this.stocksInCart.add(st);
             this.sumOrder += st.getPrice();
         } else {
+            System.out.println("Stock is null!");
+        }
+    }
+
+    public void refuseBuyStock(Stock st){
+        if (st != null) {
+            this.stocksInCart.remove(st);
+            this.sumOrder -= st.getPrice();
+        }else {
             System.out.println("Stock is null!");
         }
     }
@@ -38,7 +48,7 @@ public class Guest {
             String idStock = sc.next();
             if (shop.checkForStock(idStock)) {
                 try {
-                    Stock stock = shop.remoteStoka(Integer.parseInt(idStock));
+                    Stock stock = shop.removeStock(Integer.parseInt(idStock));
                     buySomething(stock);
                     shop.addOrders(stock);
                 } catch (Exception e) {
@@ -69,5 +79,9 @@ public class Guest {
 
     public int getSumOrder() {
         return sumOrder;
+    }
+
+    public int countOfStocks(){
+        return stocksInCart.size();
     }
 }

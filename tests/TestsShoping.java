@@ -2,7 +2,6 @@ package tests;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import shop.Categories;
 import shop.Stock;
 import shop.User;
@@ -58,9 +57,8 @@ public class TestsShoping {
         shop.addStock(Categories.WATCHES, stock);
         shop.addStock(Categories.JEWELRY, stock1);
         shop.addStock(Categories.CLOTHES, stock2);
-        int size = shop.getSizeStocks();
 
-        shop.removeStock(2);
+        shop.removeStock(1);
         int newSize = shop.getSizeValueOfStocks();
 
         assertEquals(2, newSize);

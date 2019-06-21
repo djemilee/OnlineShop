@@ -1,3 +1,5 @@
+package shop;
+
 import java.util.*;
 
 public class Stock implements Comparable<Stock> {
@@ -57,8 +59,8 @@ public class Stock implements Comparable<Stock> {
     private int idStock;
     private static int counterForStocks = 0;
 
-    public Stock(String name, int price, String mark, String color) {
 
+    public Stock(String name, int price, String mark, String color) {
         this.name = name;
         this.price = price;
         this.mark = mark;
@@ -87,7 +89,6 @@ public class Stock implements Comparable<Stock> {
         return new Stock(names.get(randomForCollections(names)),
                 random(10, 100), stockRoom.marks.get(randomForCollections(stockRoom.marks)),
                 stockRoom.colours.get(randomForCollections(stockRoom.colours))) {
-
         };
     }
 

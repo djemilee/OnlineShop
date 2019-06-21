@@ -1,3 +1,5 @@
+package shop;
+
 import exceptions.AdminException;
 import exceptions.RatingException;
 
@@ -68,7 +70,7 @@ public class Demo{
                         System.out.println("Enter \"Continue\" for Continue");
                         String st = sc.next();
                         if (st.equalsIgnoreCase("Finished")) {
-                        	Vmzona.messageForVote();
+                            Vmzona.messageForVote();
                             messageForExit(shop);
                             choose = sc.next();
                         } else {

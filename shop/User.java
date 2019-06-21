@@ -1,3 +1,6 @@
+package shop;
+
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -18,6 +21,13 @@ public class User {
     private static Vmzona shop;
 
 
+    public User(){
+        this.email = "dj@abv.bg";
+        this.password = "123456";
+        this.ownProfile = new Profile("Dj", "Ba", LocalDate.of(1998, 12, 23),
+                                                "Blagoevgrad", "0895674326", "dsfdsfes");
+    }
+
     public User(String email, String password, Vmzona shop) {
         this.setEmail(email, shop);
         this.setPassword(password);
@@ -27,18 +37,18 @@ public class User {
 
     private void setPassword(String password) {
         while (!isValidPassword(password)) {
-
             System.out.println("Try again: ");
             password = sc.next();
         }
         this.password = password;
     }
 
-    private boolean isValidPassword(String password1) {
-        if (password1 != null && password1.trim().length() >= MIN_LENGTH_OF_PASSWORD) {
+    private static boolean isValidPassword(String password) {
+        if (password != null && password.trim().length() >= MIN_LENGTH_OF_PASSWORD) {
             return true;
         }
-        System.out.println("Password must be " + MIN_LENGTH_OF_PASSWORD + "or more than " + MIN_LENGTH_OF_PASSWORD + " characters!");
+        System.out.println("Password must be " + MIN_LENGTH_OF_PASSWORD + "or more than "
+                                                + MIN_LENGTH_OF_PASSWORD + " characters!");
         return false;
     }
 
@@ -55,7 +65,7 @@ public class User {
         this.email = email;
     }
 
-    private boolean isValidEmail(String email1) {
+    private static boolean isValidEmail(String email1) {
         Pattern regexPt = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
         Matcher regexMt = regexPt.matcher(email1);
         if (regexMt.matches()) {
@@ -100,7 +110,7 @@ public class User {
             String idStock = sc.next();
             if (shop.checkForStock(idStock)) {
                 try {
-                    Stock stock = shop.remoteStoka(Integer.parseInt(idStock));
+                    Stock stock = shop.removeStock(Integer.parseInt(idStock));
                     user.stocksInCart.add(stock);
                     shop.addOrders(stock);
                     user.sumOrder += stock.getPrice();
@@ -145,7 +155,7 @@ public class User {
                 System.out.println("Enter a number of stock, which you want to order: ");
                 int idStock = sc.nextInt();
                 try {
-                    Stock stoka = shop.remoteStoka(idStock);
+                    Stock stoka = shop.removeStock(idStock);
                     this.stocksInCart.add(stoka);
                     shop.addOrders(stoka);
                     this.sumOrder += stoka.getPrice();
@@ -217,17 +227,17 @@ public class User {
         System.out.println();
     }
 
-    private void changePassword() {
+    public void changePassword() {
         System.out.println("Old password: ");
         String oldPassword = sc.next();
-            while (oldPassword.equals(this.password)) {
-                System.out.println("It's not your old password!");
-                System.out.println("Try again: ");
-                oldPassword = sc.next();
-            }
-            System.out.println("Successful!");
-            String newPass = sc.next();
-            this.setPassword(newPass);
+        while (!oldPassword.equals(this.password)) {
+            System.out.println("It's not your old password!");
+            System.out.println("Try again: ");
+            oldPassword = sc.next();
+        }
+        System.out.println("Successful!");
+        String newPass = sc.next();
+        this.setPassword(newPass);
     }
 
 

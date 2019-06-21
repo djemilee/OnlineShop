@@ -1,3 +1,5 @@
+package shop;
+
 import java.util.Random;
 
 public class Provider{

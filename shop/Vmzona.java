@@ -1,3 +1,5 @@
+package shop;
+
 import exceptions.RatingException;
 
 import java.io.*;
@@ -57,7 +59,7 @@ public class Vmzona {
         stocks.get(category).put(stock.getIdStock(), stock);
     }
 
-    public Stock remoteStoka(int idStock) throws Exception {
+    public Stock removeStock(int idStock) throws Exception {
         for (Map.Entry<Categories, TreeMap<Integer, Stock>> entry : stocks.entrySet()) {
             if (entry.getValue().containsKey(idStock)) {
                 Stock stock = entry.getValue().get(idStock);
@@ -170,7 +172,7 @@ public class Vmzona {
 	}
     
    */
-    
+
 
     public void printAllProviders() {
         for (Provider d : providers) {
@@ -206,11 +208,38 @@ public class Vmzona {
         }
     }
 
-    public void getOrderStocks() {
+    public void showOrderStocks() {
         int counter = 1;
         for (Stock s : orderedStocks) {
             System.out.println(counter + ". id: " + s.getIdStock() + " - " + s.getName());
             counter++;
+        }
+    }
+
+    public static void createFileForVote(File votes, int vote, int allVoters) throws IOException {
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(votes/*, StandardCharsets.UTF_8*/);
+            allVoters += vote;
+            pw.println(allVoters);
+            pw.flush();
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }finally {
+            pw.close();
+        }
+    }
+
+    public static void createFileForCountOfVotes(File countOfVotes, int currentNumberVoters){
+        PrintWriter pw = null;
+        try{
+            pw = new PrintWriter(countOfVotes/*, StandardCharsets.UTF_8*/);
+            pw.println(++currentNumberVoters);
+            pw.flush();
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }finally {
+            pw.close();
         }
     }
 
@@ -220,11 +249,11 @@ public class Vmzona {
         System.out.println("Are you rate our site with score of 1 to 5?");
         System.out.println("YES or NO");
         String chooseVote = sc.nextLine();
-        
+
         if (chooseVote.equalsIgnoreCase("YES")) {
             System.out.println("Vote:");
             String giveVote = sc.next();
-            
+
             if(checkForValidNumber(giveVote)) {
                 int vote = giveVote.charAt(0)-'0';
                 if (vote < MIN_VOTE) {
@@ -236,86 +265,42 @@ public class Vmzona {
 
                 int currentNumberVoters = 0;
                 int allVoters = 0;
-//                LocalDate dt = LocalDate.now();
-//                LocalTime lt = LocalTime.now();
-                
+
                 File votes = new File("files\\votes.txt");
                 votes.getParentFile().mkdir();
-                
+
                 if (!votes.exists()) {
                     votes.createNewFile();
-                    PrintWriter pw = null;
-                    try {
-                    	pw = new PrintWriter(votes/*, StandardCharsets.UTF_8*/);
-                        pw.println(vote);
-                        allVoters += vote;
-                        pw.flush();
-                    } catch (IOException e) {
-                        System.out.println("Error: " + e.getMessage());
-                    }finally {
-                    	pw.close();
-                    }
-
+                    createFileForVote(votes, vote, allVoters);
                 } else {
-                    try (Scanner vot = new Scanner(new FileInputStream(votes));) {
+                    try (Scanner vot = new Scanner(new FileInputStream(votes))) {
                         allVoters = vot.nextInt();
                     } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Error: " + e.getMessage());
                     }
-                    PrintWriter pw = null;
-                    try{
-                    	pw = new PrintWriter(votes/*, StandardCharsets.UTF_8*/);
-                        allVoters += vote;
-                        pw.println(allVoters);
-                        pw.flush();
-                    } catch (IOException e) {
-                        System.out.println("Error: " + e.getMessage());
-                    }finally {
-                    	pw.close();
-                    }
+                    createFileForVote(votes, vote, allVoters);
                 }
-                
+
                 File countOfVotes = new File("files" + File.separator + "broiGlasuvali.txt");
                 countOfVotes.getParentFile().mkdir();
                 if (!countOfVotes.exists()) {
                     countOfVotes.createNewFile();
-                    PrintWriter pw = null;
-                    try{
-                    	pw = new PrintWriter(countOfVotes/*, StandardCharsets.UTF_8*/);
-                        pw.println(++currentNumberVoters);
-                        pw.flush();
-                    } catch (IOException e) {
-                        System.out.println("Error: " + e.getMessage());
-                    }finally {
-                    	pw.close();
-                    }
+                    createFileForCountOfVotes(countOfVotes, currentNumberVoters);
                 } else {
-
                     try (Scanner vot = new Scanner(new FileInputStream(countOfVotes));) {
                         currentNumberVoters = vot.nextInt();
                     } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Error: " + e.getMessage());
                     }
-                    
-                    PrintWriter pw = null;
-                    try{
-                    	pw = new PrintWriter(countOfVotes/*, StandardCharsets.UTF_8*/);
-                        pw.println(++currentNumberVoters);
-                        pw.flush();
-                    } catch (IOException e) {
-                        System.out.println("Error: " + e.getMessage());
-                    }finally {
-                    	pw.close();
-                    }
-
+                    createFileForCountOfVotes(countOfVotes, currentNumberVoters);
                 }
 
                 System.out.println("Thank you!");
                 System.out.println("Count of voters : " + currentNumberVoters);
                 System.out.println("Average vote in the Vmzona is : " + ((allVoters * 1.0) / currentNumberVoters));
-                
+
                 createFileFOrVotes(vote);
 
             }else {
@@ -324,43 +309,42 @@ public class Vmzona {
             }
         }
     }
-    
-   public static void createFileFOrVotes(int vote) throws IOException {
-	   LocalDate dt = LocalDate.now();
-       LocalTime lt = LocalTime.now();
-       
-       File votes1 = new File("files\\DataForVotes.txt");
-       votes1.getParentFile().mkdir();
-       
-       if (!votes1.exists()) {
-           votes1.createNewFile();
-           PrintWriter pw = null;
-           try {
-        	   pw = new PrintWriter(votes1/*, StandardCharsets.UTF_8*/);
-               pw.println("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote);
-               pw.flush();
-           } catch (IOException e) {
-               System.out.println("Error: " + e.getMessage());
-           }finally{
-        	   pw.close();
-           }
 
-       } else {
-    	   FileWriter fw = null; 
-           try{
-        	    fw = new FileWriter(votes1,true);
-           	 	fw.write("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote + "\n");
-           		fw.flush();
-           } catch (IOException e) {
-               e.printStackTrace();
-               System.out.println("Error: " + e.getMessage());
-           }finally {
-        	   fw.close();
-           }
-       }
-   }
-    
-   private static boolean checkForValidNumber(String number) {
+    public static void createFileFOrVotes(int vote) throws IOException {
+        LocalDate dt = LocalDate.now();
+        LocalTime lt = LocalTime.now();
+
+        File votes1 = new File("files\\DataForVotes.txt");
+        votes1.getParentFile().mkdir();
+
+        if (!votes1.exists()) {
+            votes1.createNewFile();
+            PrintWriter pw = null;
+            try {
+                pw = new PrintWriter(votes1/*, StandardCharsets.UTF_8*/);
+                pw.println("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote);
+                pw.flush();
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }finally{
+                pw.close();
+            }
+        } else {
+            FileWriter fw = null;
+            try{
+                fw = new FileWriter(votes1,true);
+                fw.write("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote + "\n");
+                fw.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Error: " + e.getMessage());
+            }finally {
+                fw.close();
+            }
+        }
+    }
+
+    private static boolean checkForValidNumber(String number) {
         if(number!=null && number.length()>0) {
             for (int i = 0; i < number.length(); i++) {
                 if (number.charAt(i) < '0' || number.charAt(i) > '9') {
@@ -376,8 +360,27 @@ public class Vmzona {
         return Collections.unmodifiableMap(users);
     }
 
+    public Map<Categories, TreeMap<Integer, Stock>> getStocks(){
+        return Collections.unmodifiableMap(stocks);
+    }
 
     public int getTurnover() {
         return turnover;
+    }
+
+    public int getSizeStocks(){
+        return stocks.size();
+    }
+
+    public int getSizeValueOfStocks(){
+        return stocks.values().size();
+    }
+
+    public int getSizeOfOrderedStocks(){
+        return  orderedStocks.size();
+    }
+
+    public int getSizeOfUsers(){
+        return users.size();
     }
 }

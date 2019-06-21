@@ -1,3 +1,4 @@
+package shop;
 
 import exceptions.AdminException;
 
@@ -23,17 +24,17 @@ public class Admin {
     }
 
     public void actions() throws Exception {
-    	
-    	System.out.println("Enter your аdmin email address:");
+
+        System.out.println("Enter your аdmin email address:");
         String checkEmail = sc.next();
         System.out.println("Enter your admin password:");
         String checkPassword = sc.next();
         if (checkEmail.equals(getEmail()) && checkPassword.equals(getPassword())) {
-            
-        	System.out.println("Successful");
+
+            System.out.println("Successful");
             this.listOfRights();
             String choose = sc.next();
-            
+
             while (!choose.equalsIgnoreCase("8")) {
                 switch (choose) {
                     case "1":
@@ -80,24 +81,24 @@ public class Admin {
         System.out.println("7 - Show all votes for shop");
         System.out.println("8 - Exit");
     }
-	
-	 private void printVotes() throws IOException {
-	    	
-    	File file = new File("files\\DataForVotes.txt");
-    	File file1 = new File("files\\broiGlasuvali.txt");
-    	  
-    	BufferedReader br = new BufferedReader(new FileReader(file));
-    	BufferedReader br1 = new BufferedReader(new FileReader(file1));
-    	 
-    	String st; 
-    	while ((st = br.readLine()) != null) {
-    		System.out.println(st); 
-    	}
-    	System.out.println();
-    	while ((st = br1.readLine()) != null) {
-    		System.out.println("Count of voters: " + st); 
-    	}
-	}
+
+    private void printVotes() throws IOException {
+
+        File file = new File("files\\DataForVotes.txt");
+        File file1 = new File("files\\broiGlasuvali.txt");
+
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        BufferedReader br1 = new BufferedReader(new FileReader(file1));
+
+        String st;
+        while ((st = br.readLine()) != null) {
+            System.out.println(st);
+        }
+        System.out.println();
+        while ((st = br1.readLine()) != null) {
+            System.out.println("Count of voters: " + st);
+        }
+    }
 
     private void printProviders() {
         shop.printAllProviders();
@@ -113,7 +114,7 @@ public class Admin {
     }
 
     private void showOrders() {
-        shop.getOrderStocks();
+        shop.showOrderStocks();
     }
 
     private void showUsers() {
@@ -155,6 +156,5 @@ public class Admin {
     public String getPassword() {
         return password;
     }
-
 
 }
